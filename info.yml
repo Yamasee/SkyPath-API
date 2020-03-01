@@ -12,7 +12,7 @@ info:
   contact:
     name: Skypath API Team
     email: info@yamasee.global
-    url: https://yamasee.global/api
+    url: https://api.skypath.app
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html

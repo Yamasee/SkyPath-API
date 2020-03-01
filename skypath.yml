@@ -242,6 +242,39 @@ paths:
                     type: string
                     description: The refresh token the client recived on login
 
+  /v2/partner_refresh_token:
+    post:
+      operationId: partner_refresh_token
+      tags:
+        - auth
+      security:
+        - apiKey : []
+      description: |
+        The recived JWT token when using partner login has an expiry time of 3 hours, when the client
+        gets an error the token expired or even before the event of the token expiring, 
+        the client can call this route with the correct refresh token recived on the login route
+        and get new fresh JWT token. Only good for refreshing tokens recived with partner_login
+      responses:
+        200:
+          description: OK - new token generated 
+          content:
+            application/json:
+              schema:
+                $ref: 'types.yml#/RefreshTokenResponse'
+        401:
+          $ref: 'responses.yml#/InvalidRefreshToken'   
+        404:
+          $ref: 'responses.yml#/NotFound'       
+        500:
+          $ref: 'responses.yml#/InternalServerError'     
+
+      requestBody:
+        description: JWT refresh partner token 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartnerRefreshTokenRequest'
 
   /v2/delivery_token:
     get:
@@ -496,6 +529,25 @@ components:
           type: string
         company_id:
           type: string
+
+    PartnerRefreshTokenRequest:
+      description: Body for partner login request
+      type: object
+      required:
+        - refresh_token
+        - user_id
+        - company_id
+      properties:
+        refresh_token:
+          type: string
+          description: The refresh token the client recived on login
+        user_id:
+          type: string
+          description: The user_id or the requesting user
+        company_id:
+          type: string
+          description: The company id for the requesting user
+
 
     LoginRequest:
       description: Body for login request
