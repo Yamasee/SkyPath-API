@@ -631,23 +631,43 @@ components:
       allOf:
         - type: object
           required:
+            - x
+            - y
+            - alt
+            - airplane
+            - flight
             - ts
             - sev
-            - meta
           properties:
+            x:
+              description: turbulence tile x
+              example: 1404
+              type: integer
+            y:
+              description: turbulence tile y
+              example: 30
+              type: integer
+            alt:
+              description: alt in tiles
+              example: 140454545
+              type: integer
+            airplane:
+              description: airplane type
+              example: '737'
+              type: string
+            flight:
+              description: flight id
+              example: 'LY001'
+              type: string
             ts:
               description: timestamp (unix epoch)
               example: 140454545
               type: integer
-            type: 
+            sev: 
               description: severity of turbulence
               example: 3
               type: integer
-            meta:
-              description: Additional info about the event
-              example: { "size" : 8 }
-              type: object
-
+            
     Position:
       description: Aircraft Position
       allOf:
