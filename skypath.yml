@@ -663,28 +663,28 @@ components:
             - uuid
           properties:
             lat:
-              description: latitude tile
-              example: 34
+              description: latitude 
+              example: 102.135769726563
               type: number
             lon: 
-              description: lontitude tile 
-              example: 702
+              description: lontitude  
+              example: -78.5674656566
               type: number
             alt:
-              description: altitude of aircraft in tiles
-              example: 14
+              description: altitude of aircraft 
+              example: 10232.135769726563
               type: number
             hdg:
               description: aircraft heading
-              example: 345
+              example: 43.2421875
               type: number
             speed:
               description: aircraft speed
-              example: 345
+              example: 146.2100067138672
               type: number
             flight:
               description: flight id
-              example: 'ly001'
+              example: 'LY001'
               type: string
             airplane:
               description: aircraft type
