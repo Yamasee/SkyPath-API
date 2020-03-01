@@ -656,19 +656,46 @@ components:
             - lat
             - lon
             - alt
+            - hdg
+            - speed
+            - flight
+            - airplane
+            - uuid
           properties:
             lat:
               description: latitude tile
               example: 34
-              type: integer
+              type: number
             lon: 
               description: lontitude tile 
               example: 702
-              type: integer
+              type: number
             alt:
               description: altitude of aircraft in tiles
               example: 14
-              type: integer
+              type: number
+            hdg:
+              description: aircraft heading
+              example: 345
+              type: number
+            speed:
+              description: aircraft speed
+              example: 345
+              type: number
+            flight:
+              description: flight id
+              example: 'ly001'
+              type: string
+            airplane:
+              description: aircraft type
+              example: '737'
+              type: string
+            uuid:
+              description: unique client identifier
+              example: 'x4534dxc'
+              type: string
+ 
+
 
 
 
