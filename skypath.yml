@@ -652,7 +652,7 @@ components:
               type: integer
             alt:
               description: alt in tiles
-              example: 140454545
+              example: 12
               type: integer
             airplane:
               description: airplane type
@@ -680,8 +680,9 @@ components:
               type: number
             altitude:
               description: GPS altitude 
-              example: 1404
+              example: 34056
               type: number
+    
     Position:
       description: Aircraft Position
       allOf:
