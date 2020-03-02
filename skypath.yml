@@ -635,7 +635,7 @@ components:
             - y
             - alt
             - airplane
-            - flight
+            - fNum
             - ts
             - sev
           properties:
@@ -655,7 +655,7 @@ components:
               description: airplane type
               example: '737'
               type: string
-            flight:
+            fNum:
               description: flight id
               example: 'LY001'
               type: string
@@ -674,11 +674,11 @@ components:
         - type: object
           required:
             - lat
-            - lon
+            - lng
             - alt
             - hdg
             - speed
-            - flight
+            - fNum
             - airplane
             - uuid
           properties:
@@ -686,7 +686,7 @@ components:
               description: latitude 
               example: 102.135769726563
               type: number
-            lon: 
+            lng: 
               description: lontitude  
               example: -78.5674656566
               type: number
@@ -702,7 +702,7 @@ components:
               description: aircraft speed
               example: 146.2100067138672
               type: number
-            flight:
+            fNum:
               description: flight id
               example: 'LY001'
               type: string
