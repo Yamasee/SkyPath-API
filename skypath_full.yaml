@@ -756,11 +756,11 @@ paths:
           x-miro: 'responses.yml#/InternalServerError'
 components:
   securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
+    jwt_token:
+      type: apiKey
+      in: header
+      name: x-access-token
       description: JWT non expired token recived in response to a successful login request
-      bearerFormat: JWT
     apiKey:
       type: apiKey
       name: api_key
