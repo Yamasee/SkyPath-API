@@ -494,10 +494,10 @@ components:
 
   securitySchemes:
     bearerAuth:            
-      type: http
-      scheme: bearer
+      type: apiKey
+      name: x-access-token
       description: JWT non expired token recived in response to a successful login request
-      bearerFormat: JWT    
+      in: header
       
     
     apiKey:
