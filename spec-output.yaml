@@ -979,11 +979,11 @@ components:
       description: Body for partner login request
       type: object
       required:
-        - refresh_token
+        - token
         - user_id
         - company_id
       properties:
-        refresh_token:
+        token:
           type: string
           description: The refresh token the client recived on login
         user_id:
@@ -1068,41 +1068,100 @@ components:
       allOf:
         - type: object
           required:
+            - x
+            - 'y'
+            - alt
+            - lat
+            - lng
+            - altitude
+            - airplane
+            - fNum
             - ts
             - sev
-            - meta
           properties:
+            x:
+              description: turbulence tile x
+              example: 1404
+              type: integer
+            'y':
+              description: turbulence tile y
+              example: 30
+              type: integer
+            alt:
+              description: alt in tiles
+              example: 12
+              type: integer
+            airplane:
+              description: airplane type
+              example: '737'
+              type: string
+            fNum:
+              description: flight id
+              example: LY001
+              type: string
             ts:
               description: timestamp (unix epoch)
               example: 140454545
               type: integer
-            type:
+            sev:
               description: severity of turbulence
               example: 3
               type: integer
-            meta:
-              description: Additional info about the event
-              example:
-                size: 8
-              type: object
+            lat:
+              description: GPS latitude
+              example: 102.135769726563
+              type: number
+            lng:
+              description: GPS longitude
+              example: 22.135769726563
+              type: number
+            altitude:
+              description: GPS altitude
+              example: 34056
+              type: number
     Position:
       description: Aircraft Position
       allOf:
         - type: object
           required:
             - lat
-            - lon
+            - lng
             - alt
+            - hdg
+            - speed
+            - fNum
+            - airplane
+            - uuid
           properties:
             lat:
-              description: latitude tile
-              example: 34
-              type: integer
-            lon:
-              description: lontitude tile
-              example: 702
-              type: integer
+              description: latitude
+              example: 102.135769726563
+              type: number
+            lng:
+              description: lontitude
+              example: -78.5674656566
+              type: number
             alt:
-              description: altitude of aircraft in tiles
-              example: 14
-              type: integer
+              description: altitude of aircraft
+              example: 10232.135769726563
+              type: number
+            hdg:
+              description: aircraft heading
+              example: 43.2421875
+              type: number
+            speed:
+              description: aircraft speed
+              example: 146.2100067138672
+              type: number
+            fNum:
+              description: flight id
+              example: LY001
+              type: string
+            airplane:
+              description: aircraft type
+              example: '737'
+              type: string
+            uuid:
+              description: unique client identifier
+              example: x4534dxc
+              type: string
