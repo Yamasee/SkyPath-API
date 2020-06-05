@@ -14,7 +14,7 @@ WeatherEvent:
     ts: 
       description: unix epoch time stamp of update
       type: integer
-    wtype:
+    type:
       description: event type , 'cb' , 'icing','shear','lightning'
       type: string
   example:
@@ -22,7 +22,7 @@ WeatherEvent:
     tileX: 1023
     tileY: 304
     ts: 1577349257
-    wtype: 'cb'
+    type: 'cb'
 
 Position:
   type: object
@@ -82,7 +82,7 @@ WeatherReport:
     alt:
       description: alt in tiles 
       type: number
-      
+
 TurbulenceReport:
   type: object
   properties: 

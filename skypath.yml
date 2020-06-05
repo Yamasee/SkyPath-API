@@ -610,7 +610,7 @@ components:
             - y
             - alt
             - ts
-            - wtype
+            - type
           properties:
             x:
               description: turbulence tile x
@@ -628,7 +628,7 @@ components:
               description: timestamp (unix epoch)
               example: 140454545
               type: integer
-            wtype:
+            type:
               description: Weather type 'cb' , 'icing','shear','lightning'
               example: 'cb'
               type: string
