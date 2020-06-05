@@ -1,4 +1,29 @@
 
+WeatherEvent:
+  type: object
+  properties: 
+    tileX:
+      description: tileX of the event
+      type: integer
+    tileY:
+      description: tileY of the event
+      type: integer
+    alt:
+      description: alt of the event
+      type: integer
+    ts: 
+      description: unix epoch time stamp of update
+      type: integer
+    wtype:
+      description: event type , 'cb' , 'icing','shear','lightning'
+      type: string
+  example:
+    alt: 12
+    tileX: 1023
+    tileY: 304
+    ts: 1577349257
+    wtype: 'cb'
+
 Position:
   type: object
   properties: 
@@ -51,6 +76,13 @@ PositionsResponse:
     positions:
       $ref: "#/PositionsArray"
 
+WeatherReport:
+  type: object
+  properties: 
+    alt:
+      description: alt in tiles 
+      type: number
+      
 TurbulenceReport:
   type: object
   properties: 
@@ -222,6 +254,10 @@ InitialResponse:
           type: array
           items:
             $ref: "#/TurbulenceReport"
+        weather_events:
+          type: array
+          items:
+            $ref: "#/WeatherReport"
   example:
     skypath_tick: 4567
     updates:

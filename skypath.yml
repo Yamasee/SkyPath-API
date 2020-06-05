@@ -591,6 +591,47 @@ components:
         position:
           description: Position of the aircraft
           $ref: '#/components/schemas/Position'
+        weather_events:
+          description: Weather Events
+          $ref: '#/components/schemas/WeatherEvents'
+
+    WeatherEvents:
+      description: Weather Events Array
+      type: array
+      items:
+        $ref: '#/components/schemas/WeatherEvent'
+
+    WeatherEvent:
+      description: Body for weathr event
+      allOf:
+        - type: object
+          required:
+            - x
+            - y
+            - alt
+            - ts
+            - wtype
+          properties:
+            x:
+              description: turbulence tile x
+              example: 1404
+              type: integer
+            y:
+              description: turbulence tile y
+              example: 30
+              type: integer
+            alt:
+              description: alt in tiles
+              example: 12
+              type: integer
+            ts:
+              description: timestamp (unix epoch)
+              example: 140454545
+              type: integer
+            wtype:
+              description: Weather type 'cb' , 'icing','shear','lightning'
+              example: 'cb'
+              type: string
 
     Events:
       description: Events Array
