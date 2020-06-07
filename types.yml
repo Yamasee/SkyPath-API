@@ -276,6 +276,19 @@ InitialResponse:
           lng: -38.32425758432409
           speed: 269.04998779296875
           ts: 1574057471
+      weather_events: 
+        -
+          alt: 34
+          tileX: 1020
+          tileY: 681
+          type: 'cb'
+          ts: 1574057162
+        -
+          alt: 35
+          tileX: 1019
+          tileY: 680
+          type: 'shear'
+          ts: 1574057163
 
 UpdateResponse:
   type: object
@@ -326,3 +339,18 @@ UpdateResponse:
           speed: 269.04998779296875
           ts: 1574057471
           uuid: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9'
+      weather_events: 
+        -
+          alt: 34
+          tileX: 1020
+          tileY: 681
+          type: 'cb'
+          tick: 78
+          ts: 1574057162
+        -
+          alt: 35
+          tileX: 1019
+          tileY: 680
+          tick: 78
+          type: 'shear'
+          ts: 1574057163
