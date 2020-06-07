@@ -606,17 +606,17 @@ components:
       allOf:
         - type: object
           required:
-            - x
-            - y
+            - tileX
+            - tileY
             - alt
             - ts
             - type
           properties:
-            x:
+            tileX:
               description: turbulence tile x
               example: 1404
               type: integer
-            y:
+            tileY:
               description: turbulence tile y
               example: 30
               type: integer
@@ -672,8 +672,8 @@ components:
       allOf:
         - type: object
           required:
-            - x
-            - y
+            - tileX
+            - tileY
             - alt
             - lat 
             - lng 
@@ -683,11 +683,11 @@ components:
             - ts
             - sev
           properties:
-            x:
+            tileX:
               description: turbulence tile x
               example: 1404
               type: integer
-            y:
+            tileY:
               description: turbulence tile y
               example: 30
               type: integer
