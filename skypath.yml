@@ -610,6 +610,7 @@ components:
             - tileY
             - alt
             - ts
+            - fNum
             - type
           properties:
             tileX:
@@ -631,6 +632,10 @@ components:
             type:
               description: Weather type 'cb' , 'icing','shear','lightning'
               example: 'cb'
+              type: string
+            fNum:
+              description: Flight Number
+              example: 'LY001'
               type: string
 
     Events:

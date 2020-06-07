@@ -17,12 +17,16 @@ WeatherEvent:
     type:
       description: event type , 'cb' , 'icing','shear','lightning'
       type: string
+    fNum:
+      description: Flight number
+      type: string
   example:
     alt: 12
     tileX: 1023
     tileY: 304
     ts: 1577349257
     type: 'cb'
+    fNum: 'LY001'
 
 Position:
   type: object
