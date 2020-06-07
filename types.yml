@@ -76,13 +76,6 @@ PositionsResponse:
     positions:
       $ref: "#/PositionsArray"
 
-WeatherReport:
-  type: object
-  properties: 
-    alt:
-      description: alt in tiles 
-      type: number
-
 TurbulenceReport:
   type: object
   properties: 
@@ -257,7 +250,7 @@ InitialResponse:
         weather_events:
           type: array
           items:
-            $ref: "#/WeatherReport"
+            $ref: "#/WeatherEvent"
   example:
     skypath_tick: 4567
     updates:
@@ -300,6 +293,11 @@ UpdateResponse:
           type: array
           items:
             $ref: "#/TurbulenceReport"
+        weather_events:
+          type: array
+          items:
+            $ref: "#/WeatherEvent"
+
   example:
     skypath_tick: 4567
     updates:
