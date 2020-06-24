@@ -164,6 +164,8 @@ paths:
                 $ref: 'types.yml#/LoginResponse'
         401:
           $ref: 'responses.yml#/Unauthorized'   
+        403:
+          $ref: 'responses.yml#/WrongPassword'       
         404:
           $ref: 'responses.yml#/UserNotFound'       
 
