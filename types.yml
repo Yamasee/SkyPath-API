@@ -199,6 +199,38 @@ HelloResponse:
       example: '3.5.1'
       type: string
 
+LoginSSOResponse:
+  type: object
+  properties:
+    sso_url:
+      type: string
+      example: https://domain.com/sso?token=abcd
+    timeouts:
+      type: object
+      properties:
+        session: number
+        idle: number
+
+LoginOTPResponse:
+  type: object
+  properties:
+    otp_token:
+      type: string
+      example: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJ5b3NzaWZyYW5jZXMiLCJpYXQiOjE1OTg1MTUyMzUsImV4cCI6MTU5ODUxNTgzNX0.nbe4uPeFHwSWiv0_TWCtyRErxTk_KvmhTVp14vBLZVA'
+
+OTPRequestResponse:
+  type: object
+  properties:
+    otp_sent:
+      type: boolean
+      example: true
+
+OTPValidationResponse:
+  type: object
+  properties:
+    set_profile_token:
+      type: string
+      example: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJ5b3NzaWZyYW5jZXMiLCJpYXQiOjE1OTg1MTUyMzUsImV4cCI6MTU5ODUxNTgzNX0.nbe4uPeFHwSWiv0_TWCtyRErxTk_KvmhTVp14vBLZVA'
 
 LoginResponse:
   type: object

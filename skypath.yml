@@ -40,29 +40,6 @@ paths:
         404:
           $ref: 'responses.yml#/UserNotFound'    
 
-  /v2/is_new_user/{user_id_or_email}:
-    get:
-      operationId: is_new_user
-      description: Returns if user is not initialized and never used the system
-      tags:
-        - registration
-      parameters:
-        - in: path
-          name: user_id_or_email
-          schema:
-            type: string
-          required: true
-          description: User id or email for the requested user to check 
-      responses:
-        200:
-          description: A response that describes user status
-          content:
-            application/json:
-              schema:
-                $ref: 'types.yml#/UserStatusResponse'
-        404:
-          $ref: 'responses.yml#/UserNotFound'       
-
   /v2/set_user_profile:
     post:
       tags:
@@ -161,14 +138,56 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'types.yml#/LoginResponse'
+                oneOf:
+                  - $ref: 'types.yml#/LoginResponse'
+                  - $ref: 'types.yml#/LoginOTPResponse'
+                  - $ref: 'types.yml#/LoginSSOResponse'
         401:
-          $ref: 'responses.yml#/Unauthorized'   
-        403:
-          $ref: 'responses.yml#/WrongPassword'       
-        404:
-          $ref: 'responses.yml#/UserNotFound'       
+          $ref: 'responses.yml#/Unauthorized'
+  
+  /v2/otp_request:
+    post:
+      tags:
+        - auth
+      operationId: otp_request
+      description: Request a new OTP code for uninitialized user
+      requestBody:
+        description: OTP request params
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OTPRequest'
+      responses:
+        200:
+          description: OK - OTP sent
+          content:
+            application/json:
+              schema:
+                $ref: 'types.yml#/OTPRequestResponse'
+        401:
+          $ref: 'responses.yml#/Unauthorized'
 
+  /v2/otp_validate:
+    post:
+      tags:
+        - auth
+      operationId: otp_validate
+      description: Validate OTP code
+      requestBody:
+        description: OTP validation params
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OTPValidationReuqest'
+      responses:
+        200:
+          description: OK - OTP code is valid
+          content:
+            application/json:
+              schema:
+                $ref: 'types.yml#/OTPValidationResponse'
+        401:
+          $ref: 'responses.yml#/Unauthorized'
 
   /v2/partner_login:
     post:
@@ -550,6 +569,29 @@ components:
           type: string
           description: The company id for the requesting user
 
+    OTPValidationRequest:
+      description: Body for OTP validation
+      type: object
+      required:
+        - otp
+        - token
+      properties:
+        otp:
+          description: the OTP code
+          type: string
+        token:
+          description: the token received from the login request
+          type: string
+
+    OTPRequest:
+      description: Body for OTP request
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          description: the token received from the login request
+          type: string
 
     LoginRequest:
       description: Body for login request
@@ -569,14 +611,14 @@ components:
       description: Body for user profile update request
       type: object
       required:
-        - username_or_email
+        - token
         - password
       properties:
         password:
           description: new chosen password
           type: string
-        username_or_email:
-          description: user id or email of user that updates his or her profile 
+        token:
+          description: the token received from the OTP validation request
           type: string
 
 
