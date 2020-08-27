@@ -312,8 +312,12 @@ paths:
                       timeouts:
                         type: object
                         properties:
-                          session: number
-                          idle: number
+                          session:
+                            type: number
+                            example: 120
+                          idle:
+                            type: number
+                            example: 600
         "401":
           description: Api-key or supplied jwt token wrong / expired or user doesn't have
             permissions to login
@@ -365,7 +369,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/OTPValidationReuqest"
+              $ref: "#/components/schemas/OTPValidationRequest"
       responses:
         "200":
           description: OK - OTP code is valid

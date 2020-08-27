@@ -208,8 +208,12 @@ LoginSSOResponse:
     timeouts:
       type: object
       properties:
-        session: number
-        idle: number
+        session:
+          type: number
+          example: 120
+        idle:
+          type: number
+          example: 600
 
 LoginOTPResponse:
   type: object
