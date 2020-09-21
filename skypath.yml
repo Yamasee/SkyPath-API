@@ -22,6 +22,22 @@ tags:
 
 paths:
   
+  /v2/contact:
+    post:
+      operationId: contact
+      description: Used to send user contact us / feedback form
+      tags:
+        - general
+      requestBody:
+        description: The user contact request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+      responses:
+        200:
+          description: OK - message sent
+
   /v2/forgot_password:
     post:
       operationId: forgot_password
@@ -528,6 +544,19 @@ components:
       in: header
   
   schemas:
+
+    ContactRequest:
+      description: Body for user contact send message
+      type: object
+      required:
+        - messagee
+      properties:
+        message:
+          description: text message the user wants to send
+          type: string
+        email:
+          description: the users email
+          type: string
 
     ForgotPasswordRequest:
       description: Body for frogot password request
