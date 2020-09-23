@@ -17,11 +17,58 @@ tags:
     description: These routes allow authentication, Login with API key, Refresh JWT tokens
   - name: settings
     description: These routes allow getting the user recommended settings
+  - name: static_content
+    description: These routes allow getting and updating system wide static content like airports and FIR data
   - name: map
     description: These routes deal with getting and updating the logical map view of aircraft positions and turbulence reports
 
 paths:
   
+  /v2/static_content/{unique_id}/{sha1}:
+    post:
+      operationId: create_static_content
+      description: Create Static content by uploading a file
+      tags:
+        - static_content
+      requestBody:
+        description: The user contact request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStaticContentRequest'
+      responses:
+        200:
+          description: OK - content created 
+
+  /v2/static_contents:
+    get:
+      operationId: list_static_contents
+      description: Return a list of available static content
+      tags:
+        - static_content
+      responses:
+        200:
+          description: A valid list of static content 
+          content:
+            application/json:
+              schema:
+                $ref: 'types.yml#/StaticContentListResponse'
+
+  /v2/static_content/{uid}:
+    get:
+      operationId: get_static_content
+      description: Return the actual static content file
+      tags:
+        - static_content
+      responses:
+        200:
+          description: The static contents 
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+
   /v2/contact:
     post:
       operationId: contact
@@ -545,6 +592,14 @@ components:
   
   schemas:
 
+    CreateStaticContentRequest:
+      description: Actual file upload
+      type: object
+      properties:
+        thefile:
+          type: string
+          format: binary
+
     ContactRequest:
       description: Body for user contact send message
       type: object
@@ -649,7 +704,6 @@ components:
         token:
           description: the token received from the OTP validation request
           type: string
-
 
     UpdateRequestBody:
       description: Update request body

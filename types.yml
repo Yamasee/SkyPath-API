@@ -109,6 +109,29 @@ TurbulenceArray:
 
 
 
+StaticContentListResponse:
+  type: array
+  items:
+    type: object
+    properties: 
+      uid:
+        type: string
+      sha1:
+        type: string
+      version:
+        type: number
+      uploaded: 
+        type: number
+  example:
+    - uid : "airports_list"
+      sha1 : "ee03bb8fcc77500004154d3c75a8f17db126e549"
+      version : 1
+      uploaded: 1600802938479
+    - uid : "fir_borders_list"
+      sha1 : "aa99bb8fcc77500004154d3c75a8f17db126e543"
+      version : 2
+      uploaded: 1600802936002
+
 AircraftTypesResponse:
   type: array
   items:
