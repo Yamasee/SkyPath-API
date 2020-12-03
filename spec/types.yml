@@ -107,7 +107,21 @@ TurbulenceArray:
   items:
     $ref: "#/TurbulenceReport"
 
-
+Metadata: 
+  type: object
+  properties:
+    tag:
+      description: Tag with file details
+      type: object
+    uuid:
+      description: Unique id for raw data file
+      type: string
+    user_id:
+      description: Creator user
+      type: string
+    url:
+      description: Url to download raw data file
+      type: string
 
 StaticContentListResponse:
   type: array
@@ -417,3 +431,5 @@ UpdateResponse:
           tick: 78
           type: 'shear'
           ts: 1574057163
+
+

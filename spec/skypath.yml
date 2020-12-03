@@ -21,29 +21,190 @@ tags:
     description: These routes allow getting and updating system wide static content like airports and FIR data
   - name: map
     description: These routes deal with getting and updating the logical map view of aircraft positions and turbulence reports
+  - name: raw_data
+    description: These routes allow getting and updating raw data from devices and metadata entries
+  - name: proxy
+    description: Proxy endpoint for other domains
 
 paths:
-  
+  /v2/raw-data/sensor-data:
+    post:
+      operationId: raw-data-sensor-data
+      description: Upload file with raw data from device to S3 bucket and save meta data in db
+      parameters: 
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
+      security:
+        - bearerAuth: []
+      tags:
+        - raw_data
+      requestBody:
+        description: Options for request
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadRawDataRequest'
+      responses:
+        200:
+          description: OK - content created
+        401:
+          $ref: 'responses.yml#/UnauthorizedSettings'
+  /v2/raw-data/sensor-data/{id}:
+    get:
+      operationId: raw-data-sensor-data-by-id
+      description: Return uploaded raw data sensor data file from S3
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The raw-data-sensor-data ID
+      tags:
+        - raw_data
+      responses:
+        200:
+          description: OK - get file
+        401:
+          $ref: 'responses.yml#/UnauthorizedSettings'
+        404:
+          $ref: 'responses.yml#/NotFound'
+  /v2/raw-data/metadata:
+    get:
+      operationId: raw-data-metadata
+      description: Get metadata. Use parameters to specify results
+      security:
+        - bearerAuth: []
+      tags:
+        - raw_data
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
+        - in: query
+          name: limit
+          schema:
+            type: number
+            default: 10
+        - in: query
+          name: page
+          schema:
+            type: number
+            default: 1
+        - in: query
+          name: user_id
+          schema:
+            type: string
+          description: Return files created by provided user
+        - in: query
+          name: from_date
+          schema:
+            type: number
+          description: Return files created after provided data
+        - in: query
+          name: to_date
+          schema:
+            type: number
+          description: Return files created before provided data
+      responses:
+        200:
+          description: OK - metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetadataResponse'
+        401:
+          $ref: 'responses.yml#/UnauthorizedSettings'
+        404:
+          $ref: 'responses.yml#/NotFound'
+  /v2/raw-data/metadata/{id}:
+    get:
+      operationId: raw-data-metadata-by-id
+      description: Get metadata by id
+      security:
+        - bearerAuth: []
+      tags:
+        - raw_data
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The raw-data-metadata ID
+      responses:
+        200:
+          description: OK - metadata by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetadataByIdResponse'
+        401:
+          $ref: 'responses.yml#/UnauthorizedSettings'
+        404:
+          $ref: 'responses.yml#/NotFound'
+  /v2/proxy:
+    post:
+      operationId: proxy
+      description: Proxy to specified url
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
+      security:
+        - bearerAuth: []
+      tags:
+        - proxy
+      requestBody:
+        description: Options for request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProxyRequest'
+      responses:
+        200:
+          description: OK - proxy success
+        401:
+          $ref: 'responses.yml#/UnauthorizedSettings'
+
   /v2/static_content/{unique_id}/{sha1}:
     post:
       operationId: create_static_content
       description: Create Static content by uploading a file
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
+      security:
+        - bearerAuth: []
       tags:
         - static_content
       requestBody:
         description: The user contact request
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/CreateStaticContentRequest'
       responses:
         200:
           description: OK - content created 
+        401:
+          $ref: 'responses.yml#/UnauthorizedSettings'
 
   /v2/static_contents:
     get:
       operationId: list_static_contents
       description: Return a list of available static content
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
+      security:
+        - bearerAuth: []
       tags:
         - static_content
       responses:
@@ -53,11 +214,18 @@ paths:
             application/json:
               schema:
                 $ref: 'types.yml#/StaticContentListResponse'
+        401:
+          $ref: 'responses.yml#/UnauthorizedSettings'
 
   /v2/static_content/{uid}:
     get:
       operationId: get_static_content
       description: Return the actual static content file
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       tags:
         - static_content
       responses:
@@ -68,11 +236,16 @@ paths:
               schema:
                 type: string
                 format: binary
+        401:
+          $ref: 'responses.yml#/UnauthorizedSettings'
 
   /v2/contact:
     post:
       operationId: contact
       description: Used to send user contact us / feedback form
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       tags:
         - general
       requestBody:
@@ -89,6 +262,9 @@ paths:
     post:
       operationId: forgot_password
       description: Used to request a password reset link for a user
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       tags:
         - auth
       requestBody:
@@ -111,6 +287,9 @@ paths:
       description: |
         Client can set user profile like password and other future properties for non init users, 
         if user is not a new user the operation will fail with not authorized code.
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       requestBody:
         description: User profile params
         content:
@@ -132,6 +311,9 @@ paths:
     get:
       operationId: aircraft_types
       description: Returns a list of system supported aircraft types
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       tags:
         - general
       responses:
@@ -146,6 +328,9 @@ paths:
     get:
       operationId: settings
       description: Get the initial recommended settings for this user
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       tags:
         - settings
       security:
@@ -189,6 +374,9 @@ paths:
         exchange their username / email and password for a JWT token which can be user in 
         further requests. All requests that need this token are marked as such in this
         documentation
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       requestBody:
         description: Login params
         content:
@@ -214,6 +402,9 @@ paths:
         - auth
       operationId: otp_request
       description: Request a new OTP code for uninitialized user
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       requestBody:
         description: OTP request params
         content:
@@ -236,6 +427,9 @@ paths:
         - auth
       operationId: otp_validate
       description: Validate OTP code
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       requestBody:
         description: OTP validation params
         content:
@@ -262,6 +456,9 @@ paths:
         exchange their API_KEY and customer user_id for a JWT token which can be user in 
         further requests. All requests that need this token are marked as such in this
         documentation
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       security:
         - apiKey : []
       requestBody:
@@ -293,7 +490,10 @@ paths:
         Each recived JWT token when using login has an expiry time of 3 hours, when the client
         gets an error the token expired or even before the event of the token expiring, 
         the client can call this route with the correct refresh token recived on the login route
-        and get new fresh JWT token. 
+        and get new fresh JWT token.
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       responses:
         200:
           description: OK - new token generated 
@@ -338,6 +538,9 @@ paths:
         gets an error the token expired or even before the event of the token expiring, 
         the client can call this route with the correct refresh token recived on the login route
         and get new fresh JWT token. Only good for refreshing tokens recived with partner_login
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       responses:
         200:
           description: OK - new token generated 
@@ -370,6 +573,9 @@ paths:
       description: | 
         The client needs to call this to get a valid CDN delivery key to be able
         to get initial state and periodic updates or the world map
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       responses:
         200:
           description: OK - returns a valid delivery key
@@ -395,7 +601,10 @@ paths:
         a period of no connectivity (max 5 minutes) to re-init it's internal memory to the 
         current state. When network connectivity is stable the app should call the /update 
         routes to get only the diff from the last update every minute or so.
+
       parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
         - in: path
           name: company_id
           schema:
@@ -450,6 +659,8 @@ paths:
         every minute or so to stay in sync with the system updates of traffic positions and 
         turbulence data
       parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
         - in: path
           name: company_id
           schema:
@@ -508,6 +719,9 @@ paths:
       operationId: updates
       description: | 
         Client POSTs updates of aircraft position and new turbulence discovered to server every minute or so
+      parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
       security:
         - bearerAuth: []         
 
@@ -538,6 +752,8 @@ paths:
       description: |  
         Client get update of all aircrafts positions, can be used for higher frequency traffic updates map if app doesn't support animations or DR positions
       parameters:
+        - $ref: './core/headers.yml#/skypathSDK'
+        - $ref: './core/headers.yml#/skypathApp'
         - in: path
           name: company_id
           schema:
@@ -591,7 +807,49 @@ components:
       in: header
   
   schemas:
-
+    ProxyRequest:
+      description: Options for proxy request
+      type: object
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+          enum: [get, post, delete, patch, put]
+        responseType:
+          type: string
+          enum: [json, stream]
+        data: 
+          type: object
+          format: json
+        headers: 
+          type: object
+          format: json
+    MetadataResponse: 
+      description: Metadata objects with pagination properties
+      type: object
+      properties:
+        metaData:
+          type: array
+          items:
+            $ref: 'types.yml#/Metadata'
+        totalPages:
+          type: number  
+        currentPage:
+          type: number
+    MetadataByIdResponse: 
+      description: Metadata object
+      $ref: 'types.yml#/Metadata'
+    UploadRawDataRequest:
+      description: Actual file upload
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+        tag:
+          type: string
+          format: json
     CreateStaticContentRequest:
       description: Actual file upload
       type: object
