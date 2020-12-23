@@ -94,6 +94,11 @@ RawData:
           schema:
             type: string
           description: Free text search on label property
+        - in: query
+          name: flight_num
+          schema:
+            type: string
+          description: Return metadata for specific flight number
       responses:
         200:
           $ref: "./raw-data.responses.yml#/RawDataMetadataResponse"

@@ -727,8 +727,8 @@ components:
               type: number
             end_ts:
               type: number
-            turbulence_events:
-              type: array
+            flight_num:
+              type: string
             label:
               type: string
             user_response:

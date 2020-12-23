@@ -5,8 +5,8 @@ Metadata:
       type: number
     end_ts:
       type: number
-    turbulence_events: 
-      type: array
+    flight_num: 
+      type: string
     label:
       type: string
     user_response:
@@ -19,7 +19,7 @@ Metadata:
   example:
     start_ts: 1607525039
     end_ts: 1607525039
-    turbulence_events: []
+    flight_num: "123"
     label: "event"
     user_response:
       confirmed: true
