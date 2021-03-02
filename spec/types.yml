@@ -155,13 +155,19 @@ AircraftTypesResponse:
         type: string
       title:
         type: string
+      size:
+        type: string
+        enum: ['small', 'medium', 'large']
   example:
     - id : "737"
       title : Boeing 737
+      size: 'large'
     - id : "747"
       title : Boeing 747
+      size: 'large'
     - id : "A320"
       title : AirBus 320
+      size: 'medium'
 
 UserStatusResponse:
   type: object
